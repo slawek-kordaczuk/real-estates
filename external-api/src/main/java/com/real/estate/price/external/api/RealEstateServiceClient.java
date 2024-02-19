@@ -27,7 +27,7 @@ public class RealEstateServiceClient {
         this.emailService = emailService;
     }
 
-    public RealEstatePayload getRegionEstates(String regionCode, String page) throws ExternalApiException {
+    public RealEstatePayload getRegionPageEstates(String regionCode, String page) throws ExternalApiException {
         RealEstatePayload payload =
                 webClient
                         .get()

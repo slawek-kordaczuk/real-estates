@@ -13,14 +13,14 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class RealEstateExternalApiRefresher {
+public class RealEstateExternalApiScheduler {
 
     private final RealEstateExternalApiService realEstateExternalApiService;
     private final RealEstateServiceClient realEstateServiceClient;
 
     private final PaymentEstateDataMapping paymentEstateDataMapping;
 
-    public RealEstateExternalApiRefresher(RealEstateExternalApiService realEstateExternalApiService,
+    public RealEstateExternalApiScheduler(RealEstateExternalApiService realEstateExternalApiService,
                                           RealEstateServiceClient realEstateServiceClient,
                                           PaymentEstateDataMapping paymentEstateDataMapping) {
         this.realEstateExternalApiService = realEstateExternalApiService;
@@ -29,15 +29,15 @@ public class RealEstateExternalApiRefresher {
     }
 
     @Scheduled(cron = "${external-api.cron}")
-    public void refreshEstates() {
+    public void fetchEstatesFromExternalApi() {
         List<Region> regions = realEstateExternalApiService.fetchAllRegions();
         regions.forEach(region -> {
             try {
-                RealEstatePayload firstPage = realEstateServiceClient.getRegionEstates(region.getRegionType().getRegionCode(), "1");
+                RealEstatePayload firstPage = realEstateServiceClient.getRegionPageEstates(region.getRegionType().getRegionCode(), "1");
                 realEstateExternalApiService.upsertEstates(paymentEstateDataMapping.estatePayloadDataToUpsertCommands(firstPage.getData(), region));
                 int totalPages = Integer.parseInt(firstPage.getTotalPages());
                 for (int i = 2; i <= totalPages; i++) {
-                    RealEstatePayload payload = realEstateServiceClient.getRegionEstates(region.getRegionType().getRegionCode(), String.valueOf(i));
+                    RealEstatePayload payload = realEstateServiceClient.getRegionPageEstates(region.getRegionType().getRegionCode(), String.valueOf(i));
                     realEstateExternalApiService.upsertEstates(paymentEstateDataMapping.estatePayloadDataToUpsertCommands(payload.getData(), region));
                 }
             } catch (ExternalApiException e) {
