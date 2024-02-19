@@ -41,7 +41,7 @@ public class RealEstateExternalApiRefresher {
                     realEstateExternalApiService.upsertEstates(paymentEstateDataMapping.estatePayloadDataToUpsertCommands(payload.getData(), region));
                 }
             } catch (ExternalApiException e) {
-                log.error("Can't get real estates information for region {}", region.getRegionType().getRegionCode());
+                log.error("Can't get estates information for region {}", region.getRegionType().getRegionCode());
             }
         });
     }

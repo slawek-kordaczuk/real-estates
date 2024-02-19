@@ -3,7 +3,7 @@ server:
 
 logging:
   level:
-    com.real.estate.price: DEBUG
+    com.real.estate.price: INFO
 
 spring:
   datasource:

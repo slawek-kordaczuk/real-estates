@@ -44,6 +44,7 @@ public class RealEstateExternalApiHelper {
             realEstateDomainService.initializeAndValidateEstate(estate);
             resultEstates.add(saveEstate(estate));
         });
+        log.info("{} estate is saved", resultEstates.size());
         return resultEstates;
     }
 
@@ -56,7 +57,6 @@ public class RealEstateExternalApiHelper {
         if (estateResult == null) {
             throw new EstateDomainException("Could not save estate with id " + estate.getId().getValue());
         }
-        log.info("Order is saved with id: {}", estateResult.getId().getValue());
         return estateResult;
     }
 

@@ -10,6 +10,6 @@ public class RealEstateDomainServiceImpl implements RealEstateDomainService {
     public void initializeAndValidateEstate(Estate estate) {
         estate.initializeEstate();
         estate.validateEstate();
-        log.info("Estate with id: {} is initiated", estate.getId().getValue());
+        log.debug("Estate with id: {} is initiated", estate.getId().getValue());
     }
 }
