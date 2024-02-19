@@ -35,29 +35,26 @@ public class RealEstateExternalApiHelper {
         this.realEstateDomainService = realEstateDomainService;
         this.estateDataMapper = estateDataMapper;
     }
+
     @Transactional
     public List<Estate> persistEstates(List<UpsertEstateCommand> upsertEstateCommands) {
         List<Estate> resultEstates = new ArrayList<>();
-        upsertEstateCommands.forEach( command -> {
+        upsertEstateCommands.forEach(command -> {
             Estate estate = estateDataMapper.upsertEstateCommandToEstate(command);
             realEstateDomainService.initializeAndValidateEstate(estate);
-            try {
-                resultEstates.add(saveEstate(estate));
-            } catch (EstateDomainException e) {
-                log.error("Could not save estate with id {}", estate.getId().getValue());
-            }
+            resultEstates.add(saveEstate(estate));
         });
         return resultEstates;
     }
 
-    public List<Region> fetchRegions(){
+    public List<Region> fetchRegions() {
         return regionRepository.findAllRegions();
     }
 
     private Estate saveEstate(Estate estate) throws EstateDomainException {
         Estate estateResult = estateRepository.save(estate);
         if (estateResult == null) {
-            throw new EstateDomainException("Could not save estate with id {} " + estate.getId().getValue());
+            throw new EstateDomainException("Could not save estate with id " + estate.getId().getValue());
         }
         log.info("Order is saved with id: {}", estateResult.getId().getValue());
         return estateResult;

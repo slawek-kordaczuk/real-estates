@@ -5,6 +5,7 @@ import com.real.estate.price.domain.dto.upsert.UpsertEstateCommand;
 import com.real.estate.price.domain.dto.upsert.UpsertEstateResponse;
 import com.real.estate.price.domain.entity.Estate;
 import com.real.estate.price.domain.entity.Region;
+import com.real.estate.price.domain.exception.EstateDomainException;
 import com.real.estate.price.domain.ports.input.external.RealEstateExternalApiService;
 import com.real.estate.price.domain.ports.output.repository.EstateRepository;
 import com.real.estate.price.domain.ports.output.repository.RegionRepository;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -89,11 +91,11 @@ class RealEstateExternalApiServiceTest {
 
         when(estateRepository.save(any(Estate.class))).thenReturn(null);
 
-        //When
-        UpsertEstateResponse upsertEstateResponse = realEstateExternalApiService.upsertEstates(List.of(upsertEstateCommand));
-
-        //Then
-        assertEquals(0, upsertEstateResponse.getNumberOfCreatedEstates());
+        //When & Then
+        EstateDomainException estateDomainException = assertThrows(EstateDomainException.class,
+                () -> realEstateExternalApiService.upsertEstates(List.of(upsertEstateCommand)));
+        assertEquals("Could not save estate with id 15a497c1-0f4b-4eff-b9f4-c402c8c07afb",
+                estateDomainException.getMessage());
     }
 
     @Test
