@@ -1,0 +1,53 @@
+{
+  "totalPages": 1,
+  "data": [
+    {
+      "id": "6218213f-e635-42c9-a037-63958829bf5e",
+      "type": "detached_house",
+      "price": "985321.99",
+      "description": "A really nice house you should buy it",
+      "area": "56.7",
+      "rooms": 3
+    },
+    {
+      "id": "6b560bec-ed73-48a7-97cf-43bba4ecfb1c",
+      "type": "flat",
+      "price": "435698",
+      "description": "Live your dreams at the heart of Katowice",
+      "area": "44.5",
+      "rooms": 2
+    },
+    {
+      "id": "157cbded-cda6-4a87-9d00-248d18185e96",
+      "type": "flat",
+      "price": "563217",
+      "description": "A space for you and your universe",
+      "area": "70.34",
+      "rooms": 3
+    },
+    {
+      "id": "15b91e0b-342d-42bf-965a-332b70bcf119",
+      "type": "semi_detached_house",
+      "price": "985641",
+      "description": "Your new place on earth",
+      "area": "150",
+      "rooms": 3
+    },
+    {
+      "id": "97111610-6303-4dd9-b7a2-a942e0ad8ab7",
+      "type": "terraced_house",
+      "price": "236987",
+      "description": "The greenest area in Poland for you and your family",
+      "area": "90",
+      "rooms": 4
+    },
+    {
+      "id": "de37969b-75a3-4b4f-b2fa-30fd7bf19288",
+      "type": "flat",
+      "price": "856974.55",
+      "description": "A space for you and your universe",
+      "area": "70.34",
+      "rooms": 3
+    }
+  ]
+}
