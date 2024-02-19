@@ -1,16 +1,13 @@
 package com.real.estate.price.domain.valueobject;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
+@Getter
+@AllArgsConstructor
 public class CreateDate {
 
-    private LocalDateTime dateTime;
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public CreateDate(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
+    private final LocalDateTime dateTime;
 }

@@ -6,7 +6,6 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-
 @Getter
 public class Estate extends Entity<EstateId>{
 

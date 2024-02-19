@@ -28,7 +28,7 @@ public class RealEstateExternalApiRefresher {
         this.paymentEstateDataMapping = paymentEstateDataMapping;
     }
 
-    @Scheduled(cron = "0 0 21 * * *")
+    @Scheduled(cron = "${external-api.cron}")
     public void refreshEstates() {
         List<Region> regions = realEstateExternalApiService.fetchAllRegions();
         regions.forEach(region -> {
@@ -41,7 +41,7 @@ public class RealEstateExternalApiRefresher {
                     realEstateExternalApiService.upsertEstates(paymentEstateDataMapping.estatePayloadDataToUpsertCommands(payload.getData(), region));
                 }
             } catch (ExternalApiException e) {
-                log.error("Can't get real estate information");
+                log.error("Can't get real estates information for region {}", region.getRegionType().getRegionCode());
             }
         });
     }

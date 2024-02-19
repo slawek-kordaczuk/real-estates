@@ -3,9 +3,7 @@ package com.real.estate.price.domain;
 import com.real.estate.price.domain.dto.upsert.UpsertEstateCommand;
 import com.real.estate.price.domain.entity.Estate;
 import com.real.estate.price.domain.entity.Region;
-import com.real.estate.price.domain.exception.EstateCreateException;
 import com.real.estate.price.domain.exception.EstateDomainException;
-import com.real.estate.price.domain.exception.RegionFetchException;
 import com.real.estate.price.domain.mapper.EstateDataMapper;
 import com.real.estate.price.domain.ports.output.repository.EstateRepository;
 import com.real.estate.price.domain.ports.output.repository.RegionRepository;
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Component
@@ -46,7 +43,7 @@ public class RealEstateExternalApiHelper {
             realEstateDomainService.initializeAndValidateEstate(estate);
             try {
                 resultEstates.add(saveEstate(estate));
-            } catch (EstateCreateException e) {
+            } catch (EstateDomainException e) {
                 log.error("Could not save estate with id {}", estate.getId().getValue());
             }
         });
@@ -57,10 +54,10 @@ public class RealEstateExternalApiHelper {
         return regionRepository.findAllRegions();
     }
 
-    private Estate saveEstate(Estate estate) throws EstateCreateException {
+    private Estate saveEstate(Estate estate) throws EstateDomainException {
         Estate estateResult = estateRepository.save(estate);
         if (estateResult == null) {
-            throw new EstateCreateException("Could not save estate with id {} " + estate.getId().getValue());
+            throw new EstateDomainException("Could not save estate with id {} " + estate.getId().getValue());
         }
         log.info("Order is saved with id: {}", estateResult.getId().getValue());
         return estateResult;

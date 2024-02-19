@@ -4,8 +4,7 @@ import com.real.estate.price.domain.entity.Estate;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class RealEstateDomainServiceImpl implements RealEstateDomainService{
-
+public class RealEstateDomainServiceImpl implements RealEstateDomainService {
 
     @Override
     public void initializeAndValidateEstate(Estate estate) {

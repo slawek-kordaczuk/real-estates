@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = RealEstateApplicationServiceTestConfig.class)
-public class RealEstateApplicationServiceTest {
+class RealEstateApplicationServiceTest {
 
     @Autowired
     private RealEstateApplicationService realEstateApplicationService;
@@ -37,7 +37,7 @@ public class RealEstateApplicationServiceTest {
     private RegionRepository regionRepository;
 
     @Test
-    public void testAveragePrice() {
+    void testAveragePrice() {
         //Given
         AverageEstateQuery averageEstateQuery = AverageEstateQuery.builder()
                 .regionCode("SL_KATO")
@@ -53,23 +53,32 @@ public class RealEstateApplicationServiceTest {
                 .description("test description")
                 .regionType(new RegionType("SL_KATO"))
                 .build();
-        Estate estate = Estate.builder()
+        Estate estate_1 = Estate.builder()
                 .estateId(new EstateId(UUID.fromString("d215b5f8-0249-4dc5-89a3-51fd148cfb41")))
                 .region(region)
-                .price(new Money(new BigDecimal(123456)))
+                .price(new Money(new BigDecimal("123456.33")))
+                .area(new Area(Float.valueOf("12.5")))
+                .type(EstateType.FLAT)
+                .description("estate description")
+                .rooms(3)
+                .build();
+        Estate estate_2 = Estate.builder()
+                .estateId(new EstateId(UUID.fromString("15a497c1-0f4b-4eff-b9f4-c402c8c07afb")))
+                .region(region)
+                .price(new Money(new BigDecimal("654987.54")))
                 .area(new Area(Float.valueOf("12.5")))
                 .type(EstateType.FLAT)
                 .description("estate description")
                 .rooms(3)
                 .build();
         when(regionRepository.findByCode(any(String.class))).thenReturn(region);
-        when(estateRepository.findByQuery(any(AverageEstateQuery.class), any(Integer.class))).thenReturn(List.of(estate));
+        when(estateRepository.findByQuery(any(AverageEstateQuery.class), any(Integer.class))).thenReturn(List.of(estate_1, estate_2));
 
         //When
         AverageEstateResponse averageEstateResponse = realEstateApplicationService.calculateAveragePrice(averageEstateQuery);
 
         //Then
-        assertEquals(averageEstateResponse.getAvgValue(), "123456");
+        assertEquals("389221.94", averageEstateResponse.getAvgValue());
     }
 
 }

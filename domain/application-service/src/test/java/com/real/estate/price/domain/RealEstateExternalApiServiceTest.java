@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = RealEstateApplicationServiceTestConfig.class)
-public class RealEstateExternalApiServiceTest {
+class RealEstateExternalApiServiceTest {
 
     @Autowired
     private EstateRepository estateRepository;
@@ -34,7 +34,7 @@ public class RealEstateExternalApiServiceTest {
     private RealEstateExternalApiService realEstateExternalApiService;
 
     @Test
-    public void testCreateEstate(){
+    void testCreateEstate(){
         //Given
         Region region = Region.builder()
                 .regionId(new RegionId(1))
@@ -66,11 +66,38 @@ public class RealEstateExternalApiServiceTest {
         UpsertEstateResponse upsertEstateResponse = realEstateExternalApiService.upsertEstates(List.of(upsertEstateCommand));
 
         //Then
-        assertEquals(upsertEstateResponse.getNumberOfCreatedEstates(), 1);
+        assertEquals(1, upsertEstateResponse.getNumberOfCreatedEstates());
     }
 
     @Test
-    public void testFetchRegions(){
+    void testFailedCreateEstate(){
+        //Given
+        Region region = Region.builder()
+                .regionId(new RegionId(1))
+                .description("test description")
+                .regionType(new RegionType("SL_KATO"))
+                .build();
+        UpsertEstateCommand upsertEstateCommand = UpsertEstateCommand.builder()
+                .estateId(UUID.fromString("15a497c1-0f4b-4eff-b9f4-c402c8c07afb"))
+                .rooms(3)
+                .type(EstateType.FLAT)
+                .area(Float.valueOf("12.4"))
+                .description("test command description")
+                .region(region)
+                .price(new BigDecimal(123456))
+                .build();
+
+        when(estateRepository.save(any(Estate.class))).thenReturn(null);
+
+        //When
+        UpsertEstateResponse upsertEstateResponse = realEstateExternalApiService.upsertEstates(List.of(upsertEstateCommand));
+
+        //Then
+        assertEquals(0, upsertEstateResponse.getNumberOfCreatedEstates());
+    }
+
+    @Test
+    void testFetchRegions() {
         //Given
         Region region = Region.builder()
                 .regionId(new RegionId(1))
@@ -84,6 +111,6 @@ public class RealEstateExternalApiServiceTest {
         List<Region> regions = realEstateExternalApiService.fetchAllRegions();
 
         //Then
-        assertEquals(regions.size(), 1);
+        assertEquals(1, regions.size());
     }
 }

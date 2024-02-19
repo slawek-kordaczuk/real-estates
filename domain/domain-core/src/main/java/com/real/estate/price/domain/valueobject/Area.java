@@ -1,21 +1,16 @@
 package com.real.estate.price.domain.valueobject;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Objects;
 
 
+@Getter
+@AllArgsConstructor
 public class Area {
 
-    private Float squareMeter;
-
-    public Area(Float squareMeter) {
-        this.squareMeter = squareMeter;
-    }
-
-    public Float getSquareMeter() {
-        return squareMeter;
-    }
+    private final Float squareMeter;
 
     @Override
     public boolean equals(Object o) {

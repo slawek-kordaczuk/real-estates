@@ -1,24 +1,14 @@
 package com.real.estate.price.domain.entity;
 
-import com.real.estate.price.domain.valueobject.EstateId;
-import com.real.estate.price.domain.valueobject.EstateType;
 import com.real.estate.price.domain.valueobject.RegionId;
 import com.real.estate.price.domain.valueobject.RegionType;
+import lombok.Getter;
 
-import java.util.List;
-
+@Getter
 public class Region extends Entity<RegionId> {
 
-    private RegionType regionType;
-    private String description;
-
-    public RegionType getRegionType() {
-        return regionType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
+    private final RegionType regionType;
+    private final String description;
 
     public static Builder builder() {
         return new Builder();

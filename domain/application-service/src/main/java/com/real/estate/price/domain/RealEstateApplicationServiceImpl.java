@@ -4,20 +4,16 @@ import com.real.estate.price.domain.dto.average.AverageEstateQuery;
 import com.real.estate.price.domain.dto.average.AverageEstateResponse;
 import com.real.estate.price.domain.entity.Estate;
 import com.real.estate.price.domain.entity.Region;
-import com.real.estate.price.domain.exception.RegionFetchException;
 import com.real.estate.price.domain.ports.input.service.RealEstateApplicationService;
 import com.real.estate.price.domain.ports.output.repository.EstateRepository;
 import com.real.estate.price.domain.ports.output.repository.RegionRepository;
-import com.real.estate.price.domain.valueobject.Money;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Validated
@@ -46,7 +42,8 @@ public class RealEstateApplicationServiceImpl implements RealEstateApplicationSe
         for (Estate estate : estates) {
             sum = sum.add(estate.getPrice().getAmount());
         }
-        BigDecimal averagePrice = sum.divide(BigDecimal.valueOf(estates.size()), RoundingMode.HALF_EVEN);
+        BigDecimal averagePrice = sum.divide(BigDecimal.valueOf(estates.size()), RoundingMode.HALF_EVEN)
+                .setScale(2, RoundingMode.HALF_EVEN);
         return AverageEstateResponse.builder()
                 .avgValue(averagePrice.toString())
                 .build();

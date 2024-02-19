@@ -37,4 +37,5 @@ spring:
 
 external-api:
   number-of-retries: 3
+  cron: 0 0 21 * * *
 

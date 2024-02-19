@@ -4,7 +4,7 @@ import com.real.estate.price.dataaccess.entity.RegionEntity;
 import com.real.estate.price.dataaccess.mapper.DataAccessMapper;
 import com.real.estate.price.dataaccess.repository.RegionJpaRepository;
 import com.real.estate.price.domain.entity.Region;
-import com.real.estate.price.domain.exception.RegionFetchException;
+import com.real.estate.price.dataaccess.exception.RegionFetchException;
 import com.real.estate.price.domain.ports.output.repository.RegionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

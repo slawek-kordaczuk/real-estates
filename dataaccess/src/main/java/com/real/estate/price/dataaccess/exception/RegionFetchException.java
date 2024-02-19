@@ -1,4 +1,4 @@
-package com.real.estate.price.domain.exception;
+package com.real.estate.price.dataaccess.exception;
 
 public class RegionFetchException extends RuntimeException{
     public RegionFetchException(String message) {
