@@ -26,7 +26,7 @@ public class MockResponses {
         }
     }
 
-    public String mockResponse(String responseFileName) throws Exception {
+    private String mockResponse(String responseFileName) throws Exception {
         String responseFilePath = "mock_responses/" + responseFileName;
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(Objects.requireNonNull(classLoader.getResource(responseFilePath)).getFile());
