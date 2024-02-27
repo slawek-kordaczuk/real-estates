@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -26,9 +27,9 @@ public class EstateEntity {
     private String description;
     private Float area;
     private Integer rooms;
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "REGION_ID")
     private RegionEntity region;
 

@@ -6,6 +6,7 @@ import com.real.estate.price.dataaccess.repository.EstateJpaRepository;
 import com.real.estate.price.domain.dto.average.AverageEstateQuery;
 import com.real.estate.price.domain.entity.Estate;
 import com.real.estate.price.domain.exception.EstateDomainException;
+import com.real.estate.price.domain.exception.FindEstateException;
 import com.real.estate.price.domain.ports.output.repository.EstateRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -43,6 +44,7 @@ public class EstateRepositoryImpl implements EstateRepository {
                 averageEstateQuery.getDataUntil());
         if (estates.isEmpty()) {
             log.error("Could not find estates by providing parameters {}", averageEstateQuery);
+            throw new FindEstateException("Could not find estates by providing parameters " + averageEstateQuery);
         }
         return estates
                 .stream()

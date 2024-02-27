@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,6 @@ public interface EstateJpaRepository extends JpaRepository<EstateEntity, UUID> {
                                                     @Param("sizeSince") Integer sizeSince,
                                                     @Param("sizeUntil") Integer sizeUntil,
                                                     @Param("types") List<String> types,
-                                                    @Param("dateSince") LocalDateTime fromDate,
-                                                    @Param("dateUntil") LocalDateTime toDate);
+                                                    @Param("dateSince") LocalDate fromDate,
+                                                    @Param("dateUntil") LocalDate toDate);
 }

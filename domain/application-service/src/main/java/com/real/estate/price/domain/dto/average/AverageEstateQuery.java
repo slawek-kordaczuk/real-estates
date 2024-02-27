@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public class AverageEstateQuery {
     private RoomSize roomSize;
     private List<String> types;
     private Integer rooms;
-    private LocalDateTime dataSince;
-    private LocalDateTime dataUntil;
+    private LocalDate dataSince;
+    private LocalDate dataUntil;
 
 }

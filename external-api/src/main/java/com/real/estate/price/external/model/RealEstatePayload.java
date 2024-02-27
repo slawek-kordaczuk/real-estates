@@ -10,11 +10,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-//@NoArgsConstructor
-//@Setter
 @Builder
-//@JsonDeserialize(builder = RealEstatePayload.RealEstatePayloadBuilder.class)
-//@JsonSerialize
 public class RealEstatePayload {
     @JsonProperty
     private String totalPages;

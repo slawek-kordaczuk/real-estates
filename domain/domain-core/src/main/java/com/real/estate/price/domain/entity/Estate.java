@@ -4,6 +4,7 @@ import com.real.estate.price.domain.exception.EstateDomainException;
 import com.real.estate.price.domain.valueobject.*;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,7 +19,7 @@ public class Estate extends Entity<EstateId>{
     private CreateDate createDate;
 
     public void initializeEstate() {
-        this.createDate = new CreateDate(LocalDateTime.now());
+        this.createDate = new CreateDate(LocalDate.now());
     }
 
     public void validateEstate() {

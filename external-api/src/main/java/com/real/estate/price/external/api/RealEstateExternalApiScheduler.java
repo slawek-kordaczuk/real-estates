@@ -17,7 +17,6 @@ public class RealEstateExternalApiScheduler {
 
     private final RealEstateExternalApiService realEstateExternalApiService;
     private final RealEstateExternalApiClient realEstateExternalApiClient;
-
     private final PaymentEstateDataMapping paymentEstateDataMapping;
 
     public RealEstateExternalApiScheduler(RealEstateExternalApiService realEstateExternalApiService,
@@ -33,16 +32,23 @@ public class RealEstateExternalApiScheduler {
         List<Region> regions = realEstateExternalApiService.fetchAllRegions();
         regions.forEach(region -> {
             try {
-                RealEstatePayload firstPage = realEstateExternalApiClient.getRegionPageEstates(region.getRegionType().getRegionCode(), "1");
-                realEstateExternalApiService.upsertEstates(paymentEstateDataMapping.estatePayloadDataToUpsertCommands(firstPage.getData(), region));
+                RealEstatePayload firstPage = savePayloadPage(region, "1");
                 int totalPages = Integer.parseInt(firstPage.getTotalPages());
                 for (int i = 2; i <= totalPages; i++) {
-                    RealEstatePayload payload = realEstateExternalApiClient.getRegionPageEstates(region.getRegionType().getRegionCode(), String.valueOf(i));
-                    realEstateExternalApiService.upsertEstates(paymentEstateDataMapping.estatePayloadDataToUpsertCommands(payload.getData(), region));
+                    savePayloadPage(region, String.valueOf(i));
                 }
             } catch (ExternalApiException e) {
                 log.error("Can't get estates information for region {}", region.getRegionType().getRegionCode());
             }
         });
+    }
+
+    private RealEstatePayload savePayloadPage(Region region, String page) {
+        RealEstatePayload payload = realEstateExternalApiClient
+                .getRegionPageEstates(region.getRegionType().getRegionCode(), page);
+        realEstateExternalApiService
+                .upsertEstates(paymentEstateDataMapping
+                        .estatePayloadDataToUpsertCommands(payload.getData(), region));
+        return payload;
     }
 }

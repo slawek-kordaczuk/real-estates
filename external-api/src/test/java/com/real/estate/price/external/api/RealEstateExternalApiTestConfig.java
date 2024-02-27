@@ -40,8 +40,6 @@ public class RealEstateExternalApiTestConfig {
 
     @Bean
     public RealEstateExternalApiClient realEstateServiceClient(WebClient webClient, EmailService emailService) {
-//        server.start();
-//        WebClient webClient = WebClient.builder().baseUrl(server.baseUrl()).build();
         return new RealEstateExternalApiClient(webClient, emailService, objectMapper);
     }
 }

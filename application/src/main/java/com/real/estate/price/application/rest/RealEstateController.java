@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -46,10 +47,10 @@ public class RealEstateController {
         return ResponseEntity.ok(averageEstateResponse);
     }
 
-    private LocalDateTime convertToLocalDate(Date dateToConvert) {
+    private LocalDate convertToLocalDate(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+                .toLocalDate();
     }
 
     private List<String> typesToUpperCase(List<String> types) {
